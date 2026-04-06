@@ -1,0 +1,524 @@
+/* CSS Variables for Apple-like Aesthetic */
+:root {
+  --color-white: #ffffff;
+  --color-bg: #fafafa;
+  --color-black: #111111;
+  --color-dark-gray: #333333;
+  --color-light-gray: #e5e5ea;
+  /* Olive Green Accent */
+  --color-olive: #556B2F; 
+  --color-olive-light: #6B8E23;
+  
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --spacing-unit: 1rem;
+  --border-radius: 16px;
+  --transition-speed: 0.4s;
+}
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-black);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+p {
+  color: var(--color-dark-gray);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--color-olive);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-olive-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(85, 107, 47, 0.2);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-black);
+  border: 1px solid var(--color-light-gray);
+  padding: 10px 24px;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-olive);
+  color: var(--color-olive);
+}
+
+/* Navigation - Glassmorphism */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: var(--color-olive); /* GKorp Logo color placeholder */
+}
+
+/* In case there's an image logo:
+.logo img {
+  height: 30px;
+}
+*/
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-dark-gray);
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--color-olive);
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 120px 2rem 2rem;
+  position: relative;
+  background-color: var(--color-white);
+}
+
+.hero-content h1 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+
+.hero-content p {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.hero-image-wrapper {
+  margin-top: 4rem;
+  width: 100%;
+  max-width: 1000px;
+  position: relative;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  /* Subdued reflection/shadow to make it look premium */
+  box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  font-size: 1.5rem;
+  color: var(--color-light-gray);
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Products Section */
+.products-section {
+  padding: 8rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-header p {
+  font-size: 1.2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem 2rem;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.img-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  transition: transform var(--transition-speed) ease;
+}
+
+.img-container img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  transition: transform var(--transition-speed) ease;
+}
+
+.product-card:hover .img-container {
+  transform: translateY(-10px);
+}
+
+.product-card:hover .img-container img {
+  transform: scale(1.05);
+}
+
+.product-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-info p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  min-height: 48px;
+}
+
+/* Quality Dark Section */
+.quality-section {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 8rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.quality-content {
+  max-width: 800px;
+  text-align: left;
+}
+
+.quality-content h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.quality-content p {
+  font-size: 1.2rem;
+  color: #a1a1a6;
+  margin-bottom: 3rem;
+}
+
+.features {
+  list-style: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.features li {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.features li span {
+  color: var(--color-olive);
+  font-weight: 600;
+  margin-right: 1.5rem;
+  font-size: 1rem;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--color-white);
+  padding: 4rem 2rem 2rem;
+  border-top: 1px solid var(--color-light-gray);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand h3 {
+  font-size: 1.5rem;
+  color: var(--color-olive);
+  margin-bottom: 0.5rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-links a {
+  color: var(--color-dark-gray);
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  color: var(--color-olive);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-light-gray);
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Fade-in Animations (triggered by JS) */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom Quote Section */
+.custom-quote-section {
+  padding: 6rem 2rem;
+  background-color: var(--color-white);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.quote-container {
+  max-width: 600px;
+  background-color: var(--color-bg);
+  padding: 4rem 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.quote-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.quote-container p {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.whatsapp-btn {
+  background-color: #25D366; /* WhatsApp Green */
+  color: white;
+  display: inline-flex;
+  align-items: center;
+}
+
+.whatsapp-btn:hover {
+  background-color: #128C7E;
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+}
+
+/* Modal Styling */
+.modal {
+  display: none; /* Hidden by default, changed via JS */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  background-color: var(--color-white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 10;
+}
+
+.close-modal:hover {
+  color: var(--color-black);
+}
+
+.modal-body {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.modal-image-container {
+  flex: 1;
+  background-color: var(--color-bg);
+  border-radius: var(--border-radius);
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.modal-info {
+  flex: 1;
+  text-align: left;
+}
+
+.modal-info h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-info p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-features {
+  margin-bottom: 2rem;
+  border-top: 1px solid var(--color-light-gray);
+  padding-top: 1rem;
+}
+
+.modal-features p {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-dark-gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .modal-body {
+    flex-direction: column;
+  }
+}
+
