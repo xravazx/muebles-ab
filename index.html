@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GKorp | Mobiliario Minimalista</title>
+  <title>GKorp | Catálogo Premium</title>
   
-  <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -15,160 +14,184 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar">
+  <nav class="navbar glass">
     <div class="nav-container">
-      <!-- GKorp Logo -->
-      <a href="#" class="logo">
-        GKORP
-      </a>
-      <ul class="nav-links">
-        <li><a href="#coleccion">Colección</a></li>
-        <li><a href="#calidad">Calidad</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
+      <a href="#" class="logo" id="logo-btn">GKORP</a>
+      
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Buscar muebles, categorías...">
+        <button id="search-btn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+      </div>
+
+      <div class="nav-actions">
+        <button id="auth-btn" class="btn btn-outline">Iniciar Sesión</button>
+        <button id="admin-nav-btn" class="btn btn-ghost" style="display: none;">Panel Admin</button>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <div class="hero-content fade-in">
-      <h1>Redefiniendo el espacio.<br>Diseño que respira.</h1>
-      <p>Minimalismo, elegancia y un toque de naturaleza en cada pieza.</p>
-      <a href="#coleccion" class="btn btn-primary">Descubrir Colección</a>
-    </div>
-    <div class="hero-image-wrapper">
-      <img src="/sofa_olive.png" alt="Sofá Verde Oliva GKorp" class="hero-image">
-    </div>
-    <div class="scroll-indicator">
-      <span>↓</span>
-    </div>
-  </header>
+  <!-- Notificaciones Toast -->
+  <div id="toast-container" class="toast-container"></div>
 
-  <!-- Product Showcase -->
-  <section id="coleccion" class="products-section">
-    <div class="section-header fade-in">
-      <h2>Colección Exclusiva</h2>
-      <p>Líneas limpias y contrastes perfectos entre el verde oliva, el negro puro y la luz.</p>
-    </div>
+  <!-- Vista Pública: Catálogo -->
+  <main id="public-view" class="view active-view fade-in">
+    <header class="hero">
+      <div class="hero-content">
+        <h1>Diseño que respira.</h1>
+        <p>Explora nuestra colección de mobiliario minimalista de alta gama.</p>
+      </div>
+    </header>
 
-    <div class="product-grid">
-      <!-- Product 1 -->
-      <article class="product-card fade-in">
-        <div class="img-container">
-          <img src="/armchair_black.png" alt="Sillón de Cuero Negro">
-        </div>
-        <div class="product-info">
-          <h3>Sillón Noir</h3>
-          <p>Cuero negro premium. Postura escultórica.</p>
-          <button class="btn btn-secondary">Ver Detalles</button>
-        </div>
-      </article>
+    <section class="catalog-section">
+      <!-- Filtros -->
+      <div class="filters">
+        <button class="filter-btn active" data-category="Todos">Todos</button>
+        <button class="filter-btn" data-category="Silla">Sillas</button>
+        <button class="filter-btn" data-category="Mesa">Mesas</button>
+        <button class="filter-btn" data-category="Buró">Burós</button>
+        <button class="filter-btn" data-category="Cama">Camas</button>
+      </div>
 
-      <!-- Product 2 -->
-      <article class="product-card fade-in">
-        <div class="img-container">
-          <img src="/dining_table.png" alt="Mesa de Comedor Minimalista">
-        </div>
-        <div class="product-info">
-          <h3>Mesa Oakhill</h3>
-          <p>Líneas simples y madera de roble natural.</p>
-          <button class="btn btn-secondary">Ver Detalles</button>
-        </div>
-      </article>
+      <!-- Grid de Productos -->
+      <div id="product-grid" class="product-grid">
+        <!-- Generado dinámicamente -->
+      </div>
+    </section>
+  </main>
 
-      <!-- Product 3 -->
-      <article class="product-card fade-in">
-        <div class="img-container">
-          <img src="/bookshelf.png" alt="Estantería Geométrica">
-        </div>
-        <div class="product-info">
-          <h3>Estantería Vertex</h3>
-          <p>Metal mate y fresno natural. Orden absoluto.</p>
-          <button class="btn btn-secondary">Ver Detalles</button>
-        </div>
-      </article>
-
-      <!-- Product 4 -->
-      <article class="product-card fade-in">
-        <div class="img-container">
-          <img src="/nightstand.png" alt="Mesa de Noche Verde Oliva">
-        </div>
-        <div class="product-info">
-          <h3>Mesa de Noche Oliva</h3>
-          <p>Acabado lacado verde oliva con patas de latón.</p>
-          <button class="btn btn-secondary">Ver Detalles</button>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Quality / Dark Mode Section -->
-  <section id="calidad" class="quality-section">
-    <div class="quality-content fade-in">
-      <h2>Diseño sin concesiones.</h2>
-      <p>Materiales de origen sostenible, ensamblados con precisión milimétrica para durar generaciones.</p>
-      <ul class="features">
-        <li><span>01.</span> Maderas Selectas (Roble, Fresno, Nogal)</li>
-        <li><span>02.</span> Ensamblaje Artesanal y Precisión Milimétrica</li>
-        <li><span>03.</span> Acabados Duraderos en Verde Oliva y Negro Mate</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Custom Quote Section -->
-  <section class="custom-quote-section fade-in">
-    <div class="quote-container">
-      <h2>¿Buscas algo diferente?</h2>
-      <p>Crea el mueble de tus sueños o personaliza las medidas y acabados. Nuestros diseñadores y ebanistas están listos para ayudarte.</p>
-      <a href="https://wa.me/1234567890?text=Hola%20GKorp,%20me%20gustaria%20cotizar%20un%20mueble%20personalizado." class="btn btn-primary whatsapp-btn" target="_blank" rel="noopener noreferrer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; vertical-align:middle; display:inline-block;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-        Cotizar Proyecto Personalizado
-      </a>
-    </div>
-  </section>
+  <!-- Vista Administrador -->
+  <main id="admin-view" class="view fade-in" style="display: none;">
+    <section class="admin-dashboard">
+      <div class="admin-header">
+        <h2>Panel de Administración</h2>
+        <button id="add-product-btn" class="btn btn-primary">+ Añadir Producto</button>
+      </div>
+      
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Calificación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body">
+            <!-- Generado dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer -->
-  <footer id="contacto" class="footer">
-    <div class="footer-container">
-      <div class="footer-brand">
-        <h3>GKORP</h3>
-        <p>Mobiliario Minimalista de Alta Gama.</p>
-      </div>
-      <div class="footer-links">
-        <a href="#">Instagram</a>
-        <a href="#">Catálogo PDF</a>
-        <a href="#">Soporte</a>
-      </div>
-    </div>
+  <footer class="footer">
     <div class="footer-bottom">
       <p>&copy; 2026 GKorp. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <!-- Product Modal -->
-  <div id="product-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <div class="modal-body">
-        <div class="modal-image-container">
+  <!-- Modales -->
+
+  <!-- Modal Detalles de Producto -->
+  <div id="product-modal" class="modal glass-modal">
+    <div class="modal-content large-modal">
+      <button class="close-modal">&times;</button>
+      <div class="modal-body-split">
+        <div class="modal-image-side">
           <img id="modal-img" src="" alt="Producto">
         </div>
-        <div class="modal-info">
-          <h2 id="modal-title">Título del Producto</h2>
-          <p id="modal-desc">Descripción del producto.</p>
-          <div class="modal-features">
-            <p><strong>Materiales:</strong> Madera Sólida 100%</p>
-            <p><strong>Hecho a la medida:</strong> Disponible</p>
+        <div class="modal-info-side">
+          <span id="modal-category" class="tag">Categoría</span>
+          <h2 id="modal-title">Título</h2>
+          <div class="stars-display" id="modal-stars-display">
+            <!-- Estrellas promedio -->
           </div>
-          <a id="modal-wa-link" href="#" class="btn btn-primary whatsapp-btn" target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; vertical-align:middle; display:inline-block;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            Cotizar este modelo
-          </a>
+          <p id="modal-desc" class="desc">Descripción</p>
+          
+          <div class="rating-section">
+            <h3>Calificar este producto</h3>
+            <p class="rating-hint" id="rating-hint">Selecciona una estrella para calificar.</p>
+            <div class="interactive-stars" id="interactive-stars">
+              <span data-val="1">★</span><span data-val="2">★</span><span data-val="3">★</span><span data-val="4">★</span><span data-val="5">★</span>
+            </div>
+            <button id="submit-rating-btn" class="btn btn-primary" disabled>Guardar Calificación</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Modal Auth (Usuario) -->
+  <div id="auth-modal" class="modal glass-modal">
+    <div class="modal-content small-modal">
+      <button class="close-modal">&times;</button>
+      <h2>Iniciar Sesión</h2>
+      <p>Debes estar registrado para calificar productos.</p>
+      <form id="auth-form" class="form">
+        <div class="form-group">
+          <label>Usuario</label>
+          <input type="text" id="username-input" required placeholder="Tu nombre" />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+      </form>
+      <div class="admin-login-link">
+        <a href="#" id="go-to-admin-login">¿Eres administrador?</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Auth (Admin) -->
+  <div id="admin-auth-modal" class="modal glass-modal">
+    <div class="modal-content small-modal">
+      <button class="close-modal">&times;</button>
+      <h2>Acceso Administrativo</h2>
+      <p>Ingresa tus credenciales de administrador.</p>
+      <form id="admin-auth-form" class="form">
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" id="admin-pass-input" required placeholder="admin123" />
+        </div>
+        <button type="submit" class="btn btn-secondary w-100">Acceder</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Añadir Producto -->
+  <div id="add-product-modal" class="modal glass-modal">
+    <div class="modal-content">
+      <button class="close-modal">&times;</button>
+      <h2>Añadir Nuevo Producto</h2>
+      <form id="add-product-form" class="form">
+        <div class="form-group">
+          <label>Nombre del Mueble</label>
+          <input type="text" id="new-prod-name" required />
+        </div>
+        <div class="form-group">
+          <label>Categoría</label>
+          <select id="new-prod-category" required>
+            <option value="Silla">Silla</option>
+            <option value="Mesa">Mesa</option>
+            <option value="Buró">Buró</option>
+            <option value="Cama">Cama</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="new-prod-desc" required rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>URL de Imagen</label>
+          <input type="url" id="new-prod-img" required placeholder="https://..." />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Crear Producto</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="./data.js"></script>
   <script type="module" src="./main.js"></script>
 </body>
 </html>
