@@ -3,8 +3,6 @@ import { getProducts, saveProducts, getIsAdmin, setIsAdmin, getAdminPassword, se
 let products = [];
 let currentCategory = 'Todos';
 let searchQuery = '';
-let currentProductBeingRated = null;
-
 // DOM Elements
 const productGrid = document.getElementById('product-grid');
 const searchInput = document.getElementById('search-input');
@@ -118,50 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Product Detail UI (Stars Logic)
-  const stars = document.querySelectorAll('.interactive-stars span');
-  let selectedRating = 0;
-
-  stars.forEach(star => {
-    star.addEventListener('mouseover', function() {
-      const val = parseInt(this.dataset.val);
-      stars.forEach(s => s.classList.toggle('hovered', parseInt(s.dataset.val) <= val));
-    });
-    star.addEventListener('mouseout', function() {
-      stars.forEach(s => s.classList.remove('hovered'));
-    });
-    star.addEventListener('click', function() {
-      selectedRating = parseInt(this.dataset.val);
-      stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) <= selectedRating));
-      document.getElementById('submit-rating-btn').disabled = false;
-    });
-  });
-
-  document.getElementById('submit-rating-btn').addEventListener('click', () => {
-    if (currentProductBeingRated && selectedRating > 0) {
-      // Simulate saving rating
-      const idx = products.findIndex(p => p.id === currentProductBeingRated.id);
-      if (idx !== -1) {
-        let p = products[idx];
-        let total = (p.stars * p.reviews) + selectedRating;
-        p.reviews += 1;
-        p.stars = parseFloat((total / p.reviews).toFixed(1));
-        saveProducts(products);
-        
-        // Update UI
-        document.getElementById('modal-stars-display').innerHTML = renderStarsHTML(p.stars, p.reviews);
-        showToast('¡Gracias por tu calificación!', 'success');
-        
-        // Reset interactive
-        stars.forEach(s => s.classList.remove('active', 'hovered'));
-        selectedRating = 0;
-        document.getElementById('submit-rating-btn').disabled = true;
-        renderProducts(); // Update grid behind
-        if(getIsAdmin()) renderAdminTable();
-      }
-    }
-  });
-
   // Admin Actions
   document.getElementById('add-product-btn').addEventListener('click', () => {
     document.getElementById('add-product-form').reset();
@@ -209,9 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: document.getElementById('new-prod-name').value,
       category: document.getElementById('new-prod-category').value,
       desc: document.getElementById('new-prod-desc').value,
-      img: imgData,
-      stars: 0,
-      reviews: 0
+      img: imgData
     };
     products.push(newProduct);
     saveProducts(products);
@@ -282,7 +234,6 @@ function renderProducts() {
       <div class="product-info">
         <span class="product-category">${product.category}</span>
         <h3>${product.name}</h3>
-        <div class="stars">${renderStarsHTML(product.stars, product.reviews)}</div>
       </div>
     `;
 
@@ -292,16 +243,10 @@ function renderProducts() {
 }
 
 function openProductDetail(product) {
-  currentProductBeingRated = product;
   document.getElementById('modal-img').src = product.img;
   document.getElementById('modal-title').textContent = product.name;
   document.getElementById('modal-category').textContent = product.category;
   document.getElementById('modal-desc').textContent = product.desc;
-  document.getElementById('modal-stars-display').innerHTML = renderStarsHTML(product.stars, product.reviews);
-  
-  // Reset interaction
-  document.querySelectorAll('.interactive-stars span').forEach(s => s.classList.remove('active'));
-  document.getElementById('submit-rating-btn').disabled = true;
   
   openModal(productModal);
 }
@@ -316,7 +261,6 @@ function renderAdminTable() {
       <td><img src="${p.img}" alt="img"></td>
       <td><strong>${p.name}</strong></td>
       <td>${p.category}</td>
-      <td>${p.stars} ★ (${p.reviews})</td>
       <td><button class="btn btn-outline btn-edit" data-id="${p.id}" style="margin-right:0.5rem; margin-bottom:0.5rem;">Editar</button><button class="btn btn-delete" data-id="${p.id}">Eliminar</button></td>
     `;
     tbody.appendChild(tr);
@@ -352,14 +296,7 @@ function renderAdminTable() {
 
 // --- UTILS ---
 
-function renderStarsHTML(stars, reviews) {
-  let starsHtml = '';
-  const rounded = Math.round(stars);
-  for(let i=1; i<=5; i++) {
-    starsHtml += i <= rounded ? '★' : '☆';
-  }
-  return `${starsHtml} <span>(${reviews} reseñas)</span>`;
-}
+// Removed renderStarsHTML
 
 function renderSocialLinks() {
   const links = getSocialLinks();
