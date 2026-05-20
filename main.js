@@ -1,4 +1,4 @@
-import { getProducts, saveProducts, getCurrentUser, setCurrentUser, getIsAdmin, setIsAdmin } from './data.js';
+import { getProducts, saveProducts, getIsAdmin, setIsAdmin, getAdminPassword, setAdminPassword, getSocialLinks, saveSocialLinks } from './data.js';
 
 let products = [];
 let currentCategory = 'Todos';
@@ -10,7 +10,6 @@ const productGrid = document.getElementById('product-grid');
 const searchInput = document.getElementById('search-input');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const logoBtn = document.getElementById('logo-btn');
-const authBtn = document.getElementById('auth-btn');
 const adminNavBtn = document.getElementById('admin-nav-btn');
 
 // Views
@@ -19,15 +18,15 @@ const adminView = document.getElementById('admin-view');
 
 // Modals
 const productModal = document.getElementById('product-modal');
-const authModal = document.getElementById('auth-modal');
 const adminAuthModal = document.getElementById('admin-auth-modal');
 const addProductModal = document.getElementById('add-product-modal');
 const closeBtns = document.querySelectorAll('.close-modal');
 
 document.addEventListener('DOMContentLoaded', () => {
   products = getProducts();
-  updateAuthUI();
+  if(getIsAdmin()) adminNavBtn.style.display = 'inline-block';
   renderProducts();
+  renderSocialLinks();
 
   // Search
   searchInput.addEventListener('input', (e) => {
@@ -51,56 +50,66 @@ document.addEventListener('DOMContentLoaded', () => {
     showView(publicView);
   });
 
-  authBtn.addEventListener('click', () => {
-    const user = getCurrentUser();
-    if (user) {
-      // Logout
-      setCurrentUser(null);
-      setIsAdmin(false);
-      updateAuthUI();
-      showToast('Sesión cerrada correctamente', 'success');
-      showView(publicView);
+  logoBtn.addEventListener('dblclick', (e) => {
+    e.preventDefault();
+    const currentPass = getAdminPassword();
+    if (!currentPass) {
+      document.getElementById('admin-auth-title').textContent = "Configurar Admin";
+      document.getElementById('admin-auth-desc').textContent = "Crea una contraseña fuerte (min 8 chars, 1 Mayus, 1 minus, 1 num, 1 especial).";
+      document.getElementById('admin-pass-hint').style.display = "block";
+      document.getElementById('admin-auth-submit-btn').textContent = "Crear Contraseña";
     } else {
-      openModal(authModal);
+      document.getElementById('admin-auth-title').textContent = "Acceso Administrativo";
+      document.getElementById('admin-auth-desc').textContent = "Ingresa tu contraseña de administrador.";
+      document.getElementById('admin-pass-hint').style.display = "none";
+      document.getElementById('admin-auth-submit-btn').textContent = "Acceder";
     }
+    document.getElementById('admin-pass-input').value = "";
+    openModal(adminAuthModal);
   });
+
+  // Auth form removed
 
   adminNavBtn.addEventListener('click', () => {
     renderAdminTable();
     showView(adminView);
   });
 
-  // Auth Forms
-  document.getElementById('auth-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const username = document.getElementById('username-input').value;
-    setCurrentUser(username);
-    updateAuthUI();
-    closeModal(authModal);
-    showToast(`Bienvenido, ${username}!`, 'success');
-  });
-
-  document.getElementById('go-to-admin-login').addEventListener('click', (e) => {
-    e.preventDefault();
-    closeModal(authModal);
-    openModal(adminAuthModal);
-  });
+  // Quitado el botón visible anterior, ahora por logo.
 
   document.getElementById('admin-auth-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const pass = document.getElementById('admin-pass-input').value;
-    if (pass === 'admin123') { // Hardcoded for demo
-      setCurrentUser('Admin');
-      setIsAdmin(true);
-      updateAuthUI();
-      closeModal(adminAuthModal);
-      showToast('Acceso Administrativo Concedido', 'success');
-      renderAdminTable();
-      showView(adminView);
+    const currentPass = getAdminPassword();
+    
+    if (!currentPass) {
+      // Setup
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+      if (!regex.test(pass)) {
+        showToast('La contraseña no cumple con los requisitos mínimos', 'error');
+        return;
+      }
+      setAdminPassword(pass);
+      showToast('Contraseña de administrador creada', 'success');
+      loginAdmin();
     } else {
-      showToast('Contraseña incorrecta', 'error');
+      // Login
+      if (pass === currentPass) {
+        loginAdmin();
+      } else {
+        showToast('Contraseña incorrecta', 'error');
+      }
     }
   });
+
+  function loginAdmin() {
+    setIsAdmin(true);
+    adminNavBtn.style.display = 'inline-block';
+    closeModal(adminAuthModal);
+    showToast('Acceso Administrativo Concedido', 'success');
+    renderAdminTable();
+    showView(adminView);
+  }
 
   // Modal Closers
   closeBtns.forEach(btn => {
@@ -122,12 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
       stars.forEach(s => s.classList.remove('hovered'));
     });
     star.addEventListener('click', function() {
-      if (!getCurrentUser()) {
-        closeModal(productModal);
-        openModal(authModal);
-        showToast('Debes iniciar sesión para calificar', 'error');
-        return;
-      }
       selectedRating = parseInt(this.dataset.val);
       stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) <= selectedRating));
       document.getElementById('submit-rating-btn').disabled = false;
@@ -160,16 +163,53 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Admin Actions
-  document.getElementById('add-product-btn').addEventListener('click', () => openModal(addProductModal));
+  document.getElementById('add-product-btn').addEventListener('click', () => {
+    document.getElementById('add-product-form').reset();
+    openModal(addProductModal);
+  });
 
-  document.getElementById('add-product-form').addEventListener('submit', (e) => {
+  document.getElementById('toggle-settings-btn').addEventListener('click', () => {
+    const settingsSec = document.getElementById('admin-settings-section');
+    if(settingsSec.style.display === 'none') {
+      settingsSec.style.display = 'block';
+      const links = getSocialLinks();
+      document.getElementById('social-fb').value = links.facebook || "";
+      document.getElementById('social-ig').value = links.instagram || "";
+      document.getElementById('social-tw').value = links.twitter || "";
+    } else {
+      settingsSec.style.display = 'none';
+    }
+  });
+
+  document.getElementById('social-settings-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    const links = {
+      facebook: document.getElementById('social-fb').value,
+      instagram: document.getElementById('social-ig').value,
+      twitter: document.getElementById('social-tw').value
+    };
+    saveSocialLinks(links);
+    renderSocialLinks();
+    showToast('Redes Sociales actualizadas', 'success');
+  });
+
+  document.getElementById('add-product-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    let imgData = document.getElementById('new-prod-img-url').value;
+    const fileInput = document.getElementById('new-prod-img-file');
+    if (fileInput.files && fileInput.files[0]) {
+      imgData = await getBase64(fileInput.files[0]);
+    }
+    
+    if(!imgData) imgData = "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=600";
+
     const newProduct = {
       id: Date.now(),
       name: document.getElementById('new-prod-name').value,
       category: document.getElementById('new-prod-category').value,
       desc: document.getElementById('new-prod-desc').value,
-      img: document.getElementById('new-prod-img').value,
+      img: imgData,
       stars: 0,
       reviews: 0
     };
@@ -180,6 +220,35 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModal(addProductModal);
     e.target.reset();
     showToast('Producto añadido exitosamente', 'success');
+  });
+
+  document.getElementById('edit-product-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = parseInt(document.getElementById('edit-prod-id').value);
+    const idx = products.findIndex(p => p.id === id);
+    if(idx !== -1) {
+      let imgData = document.getElementById('edit-prod-img-url').value;
+      const fileInput = document.getElementById('edit-prod-img-file');
+      if (fileInput.files && fileInput.files[0]) {
+        imgData = await getBase64(fileInput.files[0]);
+      }
+      
+      if(!imgData && !products[idx].img) imgData = "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=600";
+      
+      products[idx].name = document.getElementById('edit-prod-name').value;
+      products[idx].category = document.getElementById('edit-prod-category').value;
+      products[idx].desc = document.getElementById('edit-prod-desc').value;
+      if (imgData) {
+         products[idx].img = imgData;
+      }
+      
+      saveProducts(products);
+      renderAdminTable();
+      renderProducts();
+      closeModal(document.getElementById('edit-product-modal'));
+      e.target.reset();
+      showToast('Producto actualizado', 'success');
+    }
   });
 
 });
@@ -248,9 +317,25 @@ function renderAdminTable() {
       <td><strong>${p.name}</strong></td>
       <td>${p.category}</td>
       <td>${p.stars} ★ (${p.reviews})</td>
-      <td><button class="btn btn-delete" data-id="${p.id}">Eliminar</button></td>
+      <td><button class="btn btn-outline btn-edit" data-id="${p.id}" style="margin-right:0.5rem; margin-bottom:0.5rem;">Editar</button><button class="btn btn-delete" data-id="${p.id}">Eliminar</button></td>
     `;
     tbody.appendChild(tr);
+  });
+
+  document.querySelectorAll('.btn-edit').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const id = parseInt(this.dataset.id);
+      const p = products.find(prod => prod.id === id);
+      if(p) {
+        document.getElementById('edit-prod-id').value = p.id;
+        document.getElementById('edit-prod-name').value = p.name;
+        document.getElementById('edit-prod-category').value = p.category;
+        document.getElementById('edit-prod-desc').value = p.desc;
+        document.getElementById('edit-prod-img-url').value = p.img.startsWith('data:') ? '' : p.img;
+        document.getElementById('edit-prod-img-file').value = "";
+        openModal(document.getElementById('edit-product-modal'));
+      }
+    });
   });
 
   document.querySelectorAll('.btn-delete').forEach(btn => {
@@ -276,18 +361,27 @@ function renderStarsHTML(stars, reviews) {
   return `${starsHtml} <span>(${reviews} reseñas)</span>`;
 }
 
-function updateAuthUI() {
-  const user = getCurrentUser();
-  const isAdmin = getIsAdmin();
+function renderSocialLinks() {
+  const links = getSocialLinks();
+  const fb = document.getElementById('footer-fb');
+  const ig = document.getElementById('footer-ig');
+  const tw = document.getElementById('footer-tw');
   
-  if (user) {
-    authBtn.textContent = 'Cerrar Sesión (' + user + ')';
-    adminNavBtn.style.display = isAdmin ? 'inline-block' : 'none';
-  } else {
-    authBtn.textContent = 'Iniciar Sesión';
-    adminNavBtn.style.display = 'none';
-  }
+  if (fb) fb.href = links.facebook || "#";
+  if (ig) ig.href = links.instagram || "#";
+  if (tw) tw.href = links.twitter || "#";
 }
+
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
+// Removed updateAuthUI
 
 function showView(viewElement) {
   document.querySelectorAll('.view').forEach(v => v.style.display = 'none');

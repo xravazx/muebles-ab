@@ -141,7 +141,7 @@ export const initialProducts = [
 ];
 
 export function getProducts() {
-  const stored = localStorage.getItem('gkorp_products');
+  const stored = localStorage.getItem('mueblesab_products');
   if (stored) {
     return JSON.parse(stored);
   }
@@ -150,30 +150,45 @@ export function getProducts() {
 }
 
 export function saveProducts(products) {
-  localStorage.setItem('gkorp_products', JSON.stringify(products));
+  localStorage.setItem('mueblesab_products', JSON.stringify(products));
 }
 
-// Variables globales de usuario
-export function getCurrentUser() {
-  return localStorage.getItem('gkorp_user');
-}
-
-export function setCurrentUser(username) {
-  if (username) {
-    localStorage.setItem('gkorp_user', username);
-  } else {
-    localStorage.removeItem('gkorp_user');
-  }
-}
+// Variables globales de administrador
 
 export function getIsAdmin() {
-  return localStorage.getItem('gkorp_is_admin') === 'true';
+  return localStorage.getItem('mueblesab_is_admin') === 'true';
 }
 
 export function setIsAdmin(isAdmin) {
   if (isAdmin) {
-    localStorage.setItem('gkorp_is_admin', 'true');
+    localStorage.setItem('mueblesab_is_admin', 'true');
   } else {
-    localStorage.removeItem('gkorp_is_admin');
+    localStorage.removeItem('mueblesab_is_admin');
   }
+}
+
+// --- CONFIGURACIÓN ADMIN ---
+export function getAdminPassword() {
+  return localStorage.getItem('mueblesab_admin_pass');
+}
+
+export function setAdminPassword(password) {
+  localStorage.setItem('mueblesab_admin_pass', password);
+}
+
+// --- REDES SOCIALES ---
+export const defaultSocialLinks = {
+  facebook: "https://facebook.com",
+  instagram: "https://instagram.com",
+  twitter: "https://twitter.com"
+};
+
+export function getSocialLinks() {
+  const stored = localStorage.getItem('mueblesab_social');
+  if (stored) return JSON.parse(stored);
+  return defaultSocialLinks;
+}
+
+export function saveSocialLinks(links) {
+  localStorage.setItem('mueblesab_social', JSON.stringify(links));
 }

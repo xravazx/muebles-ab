@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GKorp | Catálogo Premium</title>
+  <title>Muebles A&B | Catálogo Premium</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
   <!-- Navigation -->
   <nav class="navbar glass">
     <div class="nav-container">
-      <a href="#" class="logo" id="logo-btn">GKORP</a>
+      <a href="#" class="logo" id="logo-btn">MUEBLES A&B</a>
       
       <div class="search-bar">
         <input type="text" id="search-input" placeholder="Buscar muebles, categorías...">
@@ -24,7 +24,6 @@
       </div>
 
       <div class="nav-actions">
-        <button id="auth-btn" class="btn btn-outline">Iniciar Sesión</button>
         <button id="admin-nav-btn" class="btn btn-ghost" style="display: none;">Panel Admin</button>
       </div>
     </div>
@@ -64,7 +63,10 @@
     <section class="admin-dashboard">
       <div class="admin-header">
         <h2>Panel de Administración</h2>
-        <button id="add-product-btn" class="btn btn-primary">+ Añadir Producto</button>
+        <div style="display: flex; gap: 1rem;">
+          <button id="toggle-settings-btn" class="btn btn-outline">Ajustes</button>
+          <button id="add-product-btn" class="btn btn-primary">+ Añadir Producto</button>
+        </div>
       </div>
       
       <div class="admin-table-container">
@@ -83,13 +85,38 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Configuración de Redes Sociales -->
+      <div id="admin-settings-section" style="display: none; margin-top: 2rem; background: var(--surface); padding: 2rem; border-radius: var(--radius-md);">
+        <h3>Configuración de Redes Sociales</h3>
+        <form id="social-settings-form" class="form" style="max-width: 500px; margin-top: 1rem;">
+          <div class="form-group">
+            <label>Facebook URL</label>
+            <input type="url" id="social-fb" placeholder="https://facebook.com/..." />
+          </div>
+          <div class="form-group">
+            <label>Instagram URL</label>
+            <input type="url" id="social-ig" placeholder="https://instagram.com/..." />
+          </div>
+          <div class="form-group">
+            <label>Twitter / X URL</label>
+            <input type="url" id="social-tw" placeholder="https://twitter.com/..." />
+          </div>
+          <button type="submit" class="btn btn-secondary">Guardar Ajustes</button>
+        </form>
+      </div>
     </section>
   </main>
 
   <!-- Footer -->
   <footer class="footer">
+    <div class="footer-content" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
+      <a href="#" id="footer-fb" target="_blank" class="social-link" style="color: var(--text-secondary); text-decoration: none;">Facebook</a>
+      <a href="#" id="footer-ig" target="_blank" class="social-link" style="color: var(--text-secondary); text-decoration: none;">Instagram</a>
+      <a href="#" id="footer-tw" target="_blank" class="social-link" style="color: var(--text-secondary); text-decoration: none;">Twitter</a>
+    </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 GKorp. Todos los derechos reservados.</p>
+      <p>&copy; 2026 Muebles A&B. Todos los derechos reservados.</p>
     </div>
   </footer>
 
@@ -124,37 +151,21 @@
     </div>
   </div>
 
-  <!-- Modal Auth (Usuario) -->
-  <div id="auth-modal" class="modal glass-modal">
-    <div class="modal-content small-modal">
-      <button class="close-modal">&times;</button>
-      <h2>Iniciar Sesión</h2>
-      <p>Debes estar registrado para calificar productos.</p>
-      <form id="auth-form" class="form">
-        <div class="form-group">
-          <label>Usuario</label>
-          <input type="text" id="username-input" required placeholder="Tu nombre" />
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Entrar</button>
-      </form>
-      <div class="admin-login-link">
-        <a href="#" id="go-to-admin-login">¿Eres administrador?</a>
-      </div>
-    </div>
-  </div>
+  <!-- Modal Detalles de Producto -->
 
   <!-- Modal Auth (Admin) -->
   <div id="admin-auth-modal" class="modal glass-modal">
     <div class="modal-content small-modal">
       <button class="close-modal">&times;</button>
-      <h2>Acceso Administrativo</h2>
-      <p>Ingresa tus credenciales de administrador.</p>
+      <h2 id="admin-auth-title">Acceso Administrativo</h2>
+      <p id="admin-auth-desc">Ingresa tu contraseña de administrador.</p>
       <form id="admin-auth-form" class="form">
         <div class="form-group">
           <label>Contraseña</label>
-          <input type="password" id="admin-pass-input" required placeholder="admin123" />
+          <input type="password" id="admin-pass-input" required placeholder="Contraseña" />
+          <small id="admin-pass-hint" style="color: var(--text-secondary); display: none; margin-top: 5px; font-size: 0.8rem;">Debe contener al menos 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial.</small>
         </div>
-        <button type="submit" class="btn btn-secondary w-100">Acceder</button>
+        <button type="submit" id="admin-auth-submit-btn" class="btn btn-secondary w-100">Acceder</button>
       </form>
     </div>
   </div>
@@ -183,10 +194,51 @@
           <textarea id="new-prod-desc" required rows="3"></textarea>
         </div>
         <div class="form-group">
-          <label>URL de Imagen</label>
-          <input type="url" id="new-prod-img" required placeholder="https://..." />
+          <label>URL de Imagen (Opcional si subes archivo)</label>
+          <input type="url" id="new-prod-img-url" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Subir Imagen Local (Sobrescribe URL)</label>
+          <input type="file" id="new-prod-img-file" accept="image/*" />
         </div>
         <button type="submit" class="btn btn-primary w-100">Crear Producto</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Editar Producto -->
+  <div id="edit-product-modal" class="modal glass-modal">
+    <div class="modal-content">
+      <button class="close-modal">&times;</button>
+      <h2>Editar Producto</h2>
+      <form id="edit-product-form" class="form">
+        <input type="hidden" id="edit-prod-id" />
+        <div class="form-group">
+          <label>Nombre del Mueble</label>
+          <input type="text" id="edit-prod-name" required />
+        </div>
+        <div class="form-group">
+          <label>Categoría</label>
+          <select id="edit-prod-category" required>
+            <option value="Silla">Silla</option>
+            <option value="Mesa">Mesa</option>
+            <option value="Buró">Buró</option>
+            <option value="Cama">Cama</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="edit-prod-desc" required rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>URL de Imagen</label>
+          <input type="url" id="edit-prod-img-url" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Subir Nueva Imagen Local (Sobrescribe actual)</label>
+          <input type="file" id="edit-prod-img-file" accept="image/*" />
+        </div>
+        <button type="submit" class="btn btn-secondary w-100">Guardar Cambios</button>
       </form>
     </div>
   </div>
