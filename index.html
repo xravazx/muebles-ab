@@ -34,6 +34,11 @@
 
   <!-- Vista Pública: Catálogo -->
   <main id="public-view" class="view active-view fade-in">
+    <!-- Botón Toggle Sidebar -->
+    <button id="sidebar-toggle-btn" class="sidebar-toggle" title="Mostrar/Ocultar Menú">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+
     <header class="hero">
       <div class="hero-content">
         <h1>Diseño que respira.</h1>
@@ -42,18 +47,50 @@
     </header>
 
     <section class="catalog-section">
-      <!-- Filtros -->
-      <div class="filters">
-        <button class="filter-btn active" data-category="Todos">Todos</button>
-        <button class="filter-btn" data-category="Silla">Sillas</button>
-        <button class="filter-btn" data-category="Mesa">Mesas</button>
-        <button class="filter-btn" data-category="Buró">Burós</button>
-        <button class="filter-btn" data-category="Cama">Camas</button>
-      </div>
+      <div class="catalog-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass">
+          <div class="sidebar-block">
+            <h3>Categorías</h3>
+            <!-- Filtros -->
+            <div class="filters">
+              <!-- Generado dinámicamente -->
+            </div>
+          </div>
+          <div class="sidebar-block">
+            <h3>Nuestras Redes</h3>
+            <div class="sidebar-socials" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+              <a href="#" id="sidebar-fb" target="_blank" style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: var(--transition);">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+                Facebook
+              </a>
+              <a href="#" id="sidebar-ig" target="_blank" style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: var(--transition);">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                Instagram
+              </a>
+              <a href="#" id="sidebar-tw" target="_blank" style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: var(--transition);">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                Twitter
+              </a>
+              <a href="#" id="sidebar-wa" target="_blank" style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: var(--transition);">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-11.758c.162.266.27.44.415.68.145.24.219.44.34.686.12.246.06.467-.03.664-.09.197-.791 1.902-.791 1.902-.17.41-.351.51-.58.52-.22.01-.47.01-.71-.01-.24-.02-.63-.12-1.07-.31-1.886-.817-3.082-2.747-3.176-2.871-.094-.124-.827-1.1-1.025-2.11-.2-.99-.02-1.853.07-2.051.09-.198.24-.298.33-.408.09-.11.12-.19.18-.32.06-.13.03-.25-.015-.36-.045-.11-.42-1.02-.576-1.4-.152-.37-.308-.32-.424-.326-.11-.005-.24-.006-.37-.006-.13 0-.34.05-.52.25-.18.2-1.07 1.05-1.07 2.56 0 1.51 1.1 2.97 1.25 3.17.15.2 2.165 3.31 5.244 4.64.733.317 1.307.507 1.754.65.736.233 1.407.2 1.937.12.59-.09 1.82-.74 2.08-1.43.26-.69.26-1.28.18-1.4-.08-.12-.28-.19-.58-.34z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+          <div class="sidebar-block">
+            <h3>Garantía A&B</h3>
+            <p style="font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin: 0;">Diseños minimalistas exclusivos. Fabricados a mano con roble macizo 100% sustentable. Envíos premium a todo el país.</p>
+          </div>
+        </aside>
 
-      <!-- Grid de Productos -->
-      <div id="product-grid" class="product-grid">
-        <!-- Generado dinámicamente -->
+        <!-- Main Product Area -->
+        <div class="catalog-main" style="flex: 1;">
+          <!-- Grid de Productos -->
+          <div id="product-grid" class="product-grid">
+            <!-- Generado dinámicamente -->
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -63,8 +100,9 @@
     <section class="admin-dashboard">
       <div class="admin-header">
         <h2>Panel de Administración</h2>
-        <div style="display: flex; gap: 1rem;">
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
           <button id="toggle-settings-btn" class="btn btn-outline">Ajustes</button>
+          <button id="add-category-btn" class="btn btn-secondary">+ Añadir Categoría</button>
           <button id="add-product-btn" class="btn btn-primary">+ Añadir Producto</button>
         </div>
       </div>
@@ -76,6 +114,7 @@
               <th>Imagen</th>
               <th>Nombre</th>
               <th>Categoría</th>
+              <th>Precio</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -101,6 +140,10 @@
             <label>Twitter / X URL</label>
             <input type="url" id="social-tw" placeholder="https://twitter.com/..." />
           </div>
+          <div class="form-group">
+            <label>WhatsApp (Número de teléfono, ej: +5215555555555)</label>
+            <input type="text" id="social-wa" placeholder="Ej: +5215555555555" />
+          </div>
           <button type="submit" class="btn btn-secondary">Guardar Ajustes</button>
         </form>
       </div>
@@ -113,6 +156,7 @@
       <a href="#" id="footer-fb" target="_blank" class="social-link" style="color: var(--text-secondary); text-decoration: none;">Facebook</a>
       <a href="#" id="footer-ig" target="_blank" class="social-link" style="color: var(--text-secondary); text-decoration: none;">Instagram</a>
       <a href="#" id="footer-tw" target="_blank" class="social-link" style="color: var(--text-secondary); text-decoration: none;">Twitter</a>
+      <a href="#" id="footer-wa" target="_blank" class="social-link" style="color: var(--text-secondary); text-decoration: none;">WhatsApp</a>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Muebles A&B. Todos los derechos reservados.</p>
@@ -132,7 +176,37 @@
         <div class="modal-info-side">
           <span id="modal-category" class="tag">Categoría</span>
           <h2 id="modal-title">Título</h2>
+
+          <div id="modal-price-container" style="margin-bottom: 20px;"></div>
           <p id="modal-desc" class="desc">Descripción</p>
+
+          <!-- Características Premium -->
+          <div class="specs-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea; padding: 15px 0;">
+            <div class="spec-item" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" fill="none" stroke="var(--accent-olive)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+              <span style="font-size: 13px; font-weight: 500; color: var(--text-primary);">Madera sustentable</span>
+            </div>
+            <div class="spec-item" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" fill="none" stroke="var(--accent-olive)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+              <span style="font-size: 13px; font-weight: 500; color: var(--text-primary);">Garantía de 5 años</span>
+            </div>
+            <div class="spec-item" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" fill="none" stroke="var(--accent-olive)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+              <span style="font-size: 13px; font-weight: 500; color: var(--text-primary);">Envío Premium</span>
+            </div>
+            <div class="spec-item" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" fill="none" stroke="var(--accent-olive)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+              <span style="font-size: 13px; font-weight: 500; color: var(--text-primary);">Acabado artesanal</span>
+            </div>
+          </div>
+
+          <!-- Botón de WhatsApp -->
+          <div style="display: flex; width: 100%;">
+            <a id="modal-whatsapp-btn" target="_blank" class="btn btn-primary w-100" style="display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; background: #25d366; color: white; border: none; font-weight: 600; padding: 12px 20px;">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-11.758c.162.266.27.44.415.68.145.24.219.44.34.686.12.246.06.467-.03.664-.09.197-.791 1.902-.791 1.902-.17.41-.351.51-.58.52-.22.01-.47.01-.71-.01-.24-.02-.63-.12-1.07-.31-1.886-.817-3.082-2.747-3.176-2.871-.094-.124-.827-1.1-1.025-2.11-.2-.99-.02-1.853.07-2.051.09-.198.24-.298.33-.408.09-.11.12-.19.18-.32.06-.13.03-.25-.015-.36-.045-.11-.42-1.02-.576-1.4-.152-.37-.308-.32-.424-.326-.11-.005-.24-.006-.37-.006-.13 0-.34.05-.52.25-.18.2-1.07 1.05-1.07 2.56 0 1.51 1.1 2.97 1.25 3.17.15.2 2.165 3.31 5.244 4.64.733.317 1.307.507 1.754.65.736.233 1.407.2 1.937.12.59-.09 1.82-.74 2.08-1.43.26-.69.26-1.28.18-1.4-.08-.12-.28-.19-.58-.34z"/></svg>
+              Cotizar por WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -150,7 +224,7 @@
         <div class="form-group">
           <label>Contraseña</label>
           <input type="password" id="admin-pass-input" required placeholder="Contraseña" />
-          <small id="admin-pass-hint" style="color: var(--text-secondary); display: none; margin-top: 5px; font-size: 0.8rem;">Debe contener al menos 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial.</small>
+          <small id="admin-pass-hint" style="color: var(--text-secondary); display: none; margin-top: 5px; font-size: 0.8rem;">Debe tener exactamente 20 caracteres (Ejemplo: MueblesAB2026Admin!!).</small>
         </div>
         <button type="submit" id="admin-auth-submit-btn" class="btn btn-secondary w-100">Acceder</button>
       </form>
@@ -159,7 +233,7 @@
 
   <!-- Modal Añadir Producto -->
   <div id="add-product-modal" class="modal glass-modal">
-    <div class="modal-content">
+    <div class="modal-content medium-modal">
       <button class="close-modal">&times;</button>
       <h2>Añadir Nuevo Producto</h2>
       <form id="add-product-form" class="form">
@@ -170,15 +244,27 @@
         <div class="form-group">
           <label>Categoría</label>
           <select id="new-prod-category" required>
-            <option value="Silla">Silla</option>
-            <option value="Mesa">Mesa</option>
-            <option value="Buró">Buró</option>
-            <option value="Cama">Cama</option>
+            <!-- Generado dinámicamente -->
           </select>
         </div>
         <div class="form-group">
           <label>Descripción</label>
           <textarea id="new-prod-desc" required rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Precio ($)</label>
+          <input type="number" id="new-prod-price" min="0" step="0.01" required placeholder="Ej: 2999" />
+        </div>
+        <div class="form-group">
+          <label>¿Tiene Descuento?</label>
+          <select id="new-prod-discount-toggle" required>
+            <option value="No">No</option>
+            <option value="Si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group" id="new-prod-discount-group" style="display: none; transition: var(--transition);">
+          <label>Porcentaje de Descuento (%)</label>
+          <input type="number" id="new-prod-discount-percent" min="1" max="99" step="1" placeholder="Ej: 15" />
         </div>
         <div class="form-group">
           <label>URL de Imagen (Opcional si subes archivo)</label>
@@ -195,7 +281,7 @@
 
   <!-- Modal Editar Producto -->
   <div id="edit-product-modal" class="modal glass-modal">
-    <div class="modal-content">
+    <div class="modal-content medium-modal">
       <button class="close-modal">&times;</button>
       <h2>Editar Producto</h2>
       <form id="edit-product-form" class="form">
@@ -207,15 +293,27 @@
         <div class="form-group">
           <label>Categoría</label>
           <select id="edit-prod-category" required>
-            <option value="Silla">Silla</option>
-            <option value="Mesa">Mesa</option>
-            <option value="Buró">Buró</option>
-            <option value="Cama">Cama</option>
+            <!-- Generado dinámicamente -->
           </select>
         </div>
         <div class="form-group">
           <label>Descripción</label>
           <textarea id="edit-prod-desc" required rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Precio ($)</label>
+          <input type="number" id="edit-prod-price" min="0" step="0.01" required placeholder="Ej: 2999" />
+        </div>
+        <div class="form-group">
+          <label>¿Tiene Descuento?</label>
+          <select id="edit-prod-discount-toggle" required>
+            <option value="No">No</option>
+            <option value="Si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group" id="edit-prod-discount-group" style="display: none; transition: var(--transition);">
+          <label>Porcentaje de Descuento (%)</label>
+          <input type="number" id="edit-prod-discount-percent" min="1" max="99" step="1" placeholder="Ej: 15" />
         </div>
         <div class="form-group">
           <label>URL de Imagen</label>
@@ -227,6 +325,30 @@
         </div>
         <button type="submit" class="btn btn-secondary w-100">Guardar Cambios</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal Añadir Categoría -->
+  <div id="add-category-modal" class="modal glass-modal">
+    <div class="modal-content small-modal">
+      <button class="close-modal">&times;</button>
+      <h2 style="margin-bottom: 0.5rem;">Gestionar Categorías</h2>
+      <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 1.5rem;">Agrega, edita o elimina las categorías del catálogo.</p>
+      
+      <form id="add-category-form" class="form" style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label>Nueva Categoría</label>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="text" id="new-category-name" required placeholder="Ej: Escritorio" style="flex: 1; margin-bottom: 0;" />
+            <button type="submit" class="btn btn-primary" style="padding: 10px 15px; font-size: 13px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">+ Añadir</button>
+          </div>
+        </div>
+      </form>
+
+      <h3 style="font-size: 16px; margin-bottom: 0.5rem;">Categorías Activas</h3>
+      <div id="admin-categories-list" style="max-height: 200px; overflow-y: auto; padding-right: 5px;">
+        <!-- Generado dinámicamente -->
+      </div>
     </div>
   </div>
 
