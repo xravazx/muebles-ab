@@ -16,7 +16,12 @@
   <!-- Navigation -->
   <nav class="navbar glass">
     <div class="nav-container">
-      <a href="#" class="logo" id="logo-btn">MUEBLES A&B</a>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button id="sidebar-toggle-btn" class="sidebar-toggle" title="Mostrar/Ocultar Menú">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="#" class="logo" id="logo-btn">MUEBLES A&B</a>
+      </div>
       
       <div class="search-bar">
         <input type="text" id="search-input" placeholder="Buscar muebles, categorías...">
@@ -34,11 +39,6 @@
 
   <!-- Vista Pública: Catálogo -->
   <main id="public-view" class="view active-view fade-in">
-    <!-- Botón Toggle Sidebar -->
-    <button id="sidebar-toggle-btn" class="sidebar-toggle" title="Mostrar/Ocultar Menú">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-
     <header class="hero">
       <div class="hero-content">
         <h1>Diseño que respira.</h1>
